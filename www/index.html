@@ -104,6 +104,12 @@ canvas{width:100%;height:100%;object-fit:contain;display:block;image-rendering:p
 <script>
 (()=>{
 "use strict";
+  window.addEventListener('error',function(e){
+  document.body.innerHTML='<pre style="color:#fff;background:#900;padding:16px;font-size:13px;white-space:pre-wrap;position:fixed;inset:0;overflow:auto;z-index:9999;margin:0;">ERRO:\n'+(e.message||'')+'\nFicheiro: '+(e.filename||'')+'\nLinha: '+(e.lineno||'')+':'+(e.colno||'')+'\n\n'+((e.error&&e.error.stack)||'')+'</pre>';
+});
+window.addEventListener('unhandledrejection',function(e){
+  document.body.innerHTML='<pre style="color:#fff;background:#900;padding:16px;font-size:13px;white-space:pre-wrap;position:fixed;inset:0;overflow:auto;z-index:9999;margin:0;">PROMESSA REJEITADA:\n'+((e.reason&&e.reason.message)||e.reason||'')+'</pre>';
+});
 const T=32,COLS=20,ROWS=11,W=COLS*T,H=ROWS*T;
 const GRAV=.5,JUMP=9.5,SPEED=3;
 const $=id=>document.getElementById(id);
