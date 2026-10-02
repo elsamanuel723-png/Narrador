@@ -110,7 +110,7 @@ function nmShow(label,msg){
 }
 window.addEventListener('error',function(e){
   nmShow('ERRO JS','Msg: '+(e.message||'')+'\nFicheiro: '+(e.filename||'')+'\nLinha:Col: '+(e.lineno||'')+':'+(e.colno||'')+'\nStack: '+((e.error&&e.error.stack)||'(sem stack)'));
-});
+},true);
 window.addEventListener('unhandledrejection',function(e){
   nmShow('PROMESSA REJEITADA',(e.reason&&(e.reason.message||e.reason.toString()))||String(e.reason));
 });
@@ -132,6 +132,7 @@ window.addEventListener('load',function(){
   },800);
 });
 </script>
+<script src="test.js" onerror="nmShow('TESTE FALHOU AO CARREGAR','test.js nao foi encontrado')"></script>
 <script src="game.js" onerror="nmShow('FALHA AO CARREGAR','O ficheiro game.js nao foi encontrado ou nao carregou. Verifica se esta mesmo dentro de www/game.js')" onload="nmShow('OK','game.js carregou como recurso (mas pode ainda falhar a executar)')"></script>
 </body>
 </html>
