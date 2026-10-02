@@ -132,6 +132,6 @@ window.addEventListener('load',function(){
   },800);
 });
 </script>
-<script src="game.js"></script>
+<script src="game.js" onerror="nmShow('FALHA AO CARREGAR','O ficheiro game.js nao foi encontrado ou nao carregou. Verifica se esta mesmo dentro de www/game.js')" onload="nmShow('OK','game.js carregou como recurso (mas pode ainda falhar a executar)')"></script>
 </body>
 </html>
