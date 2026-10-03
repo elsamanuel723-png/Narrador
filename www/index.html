@@ -100,39 +100,6 @@ canvas{width:100%;height:100%;object-fit:contain;display:block;image-rendering:p
   <div id="padL"><div id="dpad"><div id="bl">◀</div><div id="br">▶</div></div></div>
   <div id="padR"><div id="jump">▲</div></div>
 </div>
-
-<script>
-function nmShow(label,msg){
-  var d=document.createElement('div');
-  d.style.cssText='position:relative;background:#900;color:#fff;padding:10px;font-size:12px;font-family:monospace;white-space:pre-wrap;z-index:99999;border-bottom:2px solid #fff;';
-  d.textContent=label+':\n'+msg;
-  document.body.insertBefore(d,document.body.firstChild);
-}
-window.addEventListener('error',function(e){
-  nmShow('ERRO JS','Msg: '+(e.message||'')+'\nFicheiro: '+(e.filename||'')+'\nLinha:Col: '+(e.lineno||'')+':'+(e.colno||'')+'\nStack: '+((e.error&&e.error.stack)||'(sem stack)'));
-},true);
-window.addEventListener('unhandledrejection',function(e){
-  nmShow('PROMESSA REJEITADA',(e.reason&&(e.reason.message||e.reason.toString()))||String(e.reason));
-});
-document.addEventListener('securitypolicyviolation',function(e){
-  nmShow('CSP BLOQUEOU',(e.violatedDirective||'')+' | '+(e.blockedURI||''));
-});
-window.addEventListener('load',function(){
-  setTimeout(function(){
-    var c=document.getElementById('c');
-    var app=document.getElementById('app');
-    var stage=document.getElementById('stage');
-    nmShow('TAMANHOS','innerW/H: '+window.innerWidth+'x'+window.innerHeight+
-      '\nhtml client: '+document.documentElement.clientWidth+'x'+document.documentElement.clientHeight+
-      '\nbody client: '+document.body.clientWidth+'x'+document.body.clientHeight+
-      '\n#app: '+(app?app.clientWidth+'x'+app.clientHeight:'nao encontrado')+
-      '\n#stage: '+(stage?stage.clientWidth+'x'+stage.clientHeight:'nao encontrado')+
-      '\ncanvas: '+(c?c.clientWidth+'x'+c.clientHeight:'nao encontrado')+
-      '\n__nm existe: '+(typeof window.__nm!=='undefined'));
-  },800);
-});
-</script>
-<script src="test.js" onerror="nmShow('TESTE FALHOU AO CARREGAR','test.js nao foi encontrado')"></script>
-<script src="game.js" onerror="nmShow('FALHA AO CARREGAR','O ficheiro game.js nao foi encontrado ou nao carregou. Verifica se esta mesmo dentro de www/game.js')" onload="nmShow('OK','game.js carregou como recurso (mas pode ainda falhar a executar)')"></script>
+<script src="game.js"></script>
 </body>
 </html>
