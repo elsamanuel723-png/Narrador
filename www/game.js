@@ -5970,7 +5970,8 @@ const doorFlee=(d,tx,ty,r=90)=>{d.flee={x:tx*T+4,y:ty*T,r};return d;};
 function newGrid(){
   const g=Array.from({length:ROWS},(_,r)=>Array.from({length:COLS},()=>r===ROWS-1?"#":"."));
   const L={g,objs:[],beats:[],
-    sp:(r,c)=>{g[r][c]="^";},
+    spk:[],
+    sp:(r,c)=>{g[r][c]="^";L.spk.push([r,c]);},
     gap:(a,b)=>{for(let c=a;c<=b;c++)g[ROWS-1][c]=".";},
     pl:(r,a,b)=>{for(let c=a;c<=b;c++)g[r][c]="#";},
     o:(...a)=>{a.forEach(x=>L.objs.push(x));},
@@ -6049,25 +6050,25 @@ const RECIPES=[
  "portalBack spk2 sawH","invert1 spk2 las1","fakeBridge hid spk1","hidBridge sawV pop3","platPit spk2 las1",
  "climb sawH spk1","skyline pit2 spk1","spinPlat las1 pop3 +wrap","popRow pit2 pist1","bounceHop spk2 sawV",
  "pist3 pit2 spk2","crush1 spk2 sawH","crushRow pit2 hid","rainS sawH pit2","bsawBox spk2 hid",
- "sawH pit2 pendS +rollL","pop3 pit2 las1 +dartR","pist1 pit3 spk2 +mortR","spk3 sawV pit2 +ball","las2 pop3 spk1 +rollR",
+ "sawH pit2 pendS +rollL","pop3 pit2 las1 +dartR","pist1 pit3 spk2 +mortR","spk2 sawH spk1 +ghost","las2 pop3 spk1 +rollR",
  "pendHi pit2 hid +ghost","crush1 pit2 sawH +mortR","mudSp spk3 pist1 +rollL","hurdle pop3 pendS +dartR","beltBack sawV pit2 +mortL",
  "skyline sawAir +ghost","climb popRow +dartR","spinPlat pist3 +rollL","fakeBridge las1 spk1 +ball","windPit las2 +dartR",
  "crumbleChain pendHi +ghost","portalSkip sawV spk1 +mortR","invert1 sawV spk1 +rollL","bounceHop pop3 +dartR","bsawBox pit2 spk1 +ghost",
- "spk2 pit2 hid sawV +chase","pit3 spk2 pop3 +chase","sawH spk1 pit2 +lava","pist1 spk2 pit2 hid +lava","las1 pit3 spk2 +chase",
- "pendS pit3 pop3 +lava","hurdle pit3 sawV +chase","crush1 spk3 pit2 +lava","popRow spk2 pit2 +chase","spk3 pit3 hid +lava",
+ "spk2 pit2 spk1 +ghost","pit3 spk2 pop3 +chase","sawH spk1 pit2 +lava","pist1 spk2 pit2 hid +lava","las1 pit3 spk2 +chase",
+ "pendS pit3 pop3 +lava","hurdle pit3 sawV +chase","crush1 spk3 pit2 +lava","popRow spk2 pit2 +chase","spk1 pit2 spk2 +ghost",
  "sawAir pist1 spk1 +rollL +mortR","pendHi pit2 sawV +dartR +ghost","las2 pit3 spk1 +rollR +dartR","pop3 pendS pit2 +mortR +mortL","skyline hid +ghost +rollL",
  "spinPlat sawV spk1 +dartR +mortR","crumbleChain las1 +ball +dartR","fakeBridge pist1 +rollL +ghost","platSaw pit2 spk1 +dartR","hidBridge crushRow spk1 +ghost",
- "bsawBox spk2 hid +flee","sawH sawV pit3 +flee +rollL","pist3 las1 spk2 +ghost","popRow las1 spk2 +dartR","spin1 pit3 pendS +rollL",
+ "bsawBox spk2 hid +flee","sawH sawV pit3 +flee +rollL","pist1 las1 spk2 +ghost","pop3 las1 spk2 +dartR","spin1 pit3 pendS +rollL",
  "pendHi las2 spk1 +mortR","climb pist1 pit2 +ghost +dartR","windPit sawV pit2 +chase","mudSp las1 pit3 +ball","beltBack pist1 spk3 +flee",
  "crumbleChain pop3 +chase +dartR","portalSkip pendS las1 +ghost","invert1 las1 pit2 +rollL +mortR","fakeBridge spk2 sawV +chase","skyline pit3 +lava +dartR",
  "bounceHop las1 spk1 +rollL +ghost","spinPlat popRow +chase","platSaw las1 spk2 +rollL","crush1 crushRow pit2 +mortR","hidBridge pop3 pist1 +chase +dartR",
- "las2 pendHi +rollL +dartR","spk3 pop3 sawV +ghost +dartR","pist3 pit3 sawV +chase +mortR","bsawBox pop3 +ghost","crumbleChain pist1 spk2 +rollL +ball",
+ "las2 pendHi +rollL +dartR","spk2 pop3 sawV +ghost","pist3 pit3 sawV +chase +mortR","bsawBox pop3 +ghost","crumbleChain pist1 spk2 +rollL +ball",
  "windPit pendS spk1 +ghost +flee","skyline sawV pit2 +lava +rollL","fakeBridge las1 spk1 +chase +dartR","portalBack pit3 pendS +ghost","invert1 pop3 spk1 +dartR +mortR",
  "sawH pit3 las1 +chase +rollL","spinPlat las2 +ghost +dartR","bounceHop pendS +chase +dartR","skyline hid spk2 +lava +ghost +dartR","crushRow pop3 spk2 +chase +mortR",
  "hidBridge fakeBridge +ghost","pist3 sawH +ghost +rollL +dartR","las2 popRow +ghost +flee","bsawBox pendHi +ghost +flee +rollL","skyline crumbleChain +chase +ghost +dartR"
 ];
 /* aperto de dificuldade por nível (q: 0 = folgado ... 1.2 = brutal); calibrado por um robô */
-let QS=[0.4, 0.501, 0.575, 0.642, 0.705, 0.764, 0.822, 0.877, 0.931, 0.983, 1.034, 1.085, 1.134, 1.182, 1.23, 1.277, 1.324, 1.37, 1.415, 1.46, 1.504, 1.548, 1.592, 1.635, 1.678, 1.72, 1.762, 1.804, 1.846, 1.887, 1.928, 1.968, 2.009, 2.049, 2.089, 2.128, 2.168, 2.207, 2.246, 2.284, 2.323, 2.361, 2.399, 2.437, 2.475, 2.513, 2.55, 2.588, 2.625, 2.662, 2.699, 2.735, 2.772, 2.808, 2.418, 2.881, 2.917, 2.953, 2.989, 3.024, 3.06, 3.095, 3.13, 3.166, 3.201, 2.75, 3.27, 3.305, 3.34, 3.374, 0.9, 3.443, 3.477, 3.512, 3.546, 3.58, 3.613, 3.647, 3.681, 3.715, 3.748, 3.781, 3.815, 3.848, 3.881, 3.914, 3.947, 2.189, 4.013, 4.046, 4.079, 4.112, 4.144, 4.177, 4.209, 4.241, 4.274, 4.306, 4.338, 4.37, 3.5, 1.774, 4.466, 4.498, 4.53, 1.825, 4.593, 4.625, 4.657, 4.688, 4.72, 1.188, 1.913, 2.647, 4.845, 4.876, 4.171, 4.938, 1.988, 5];
+let QS=[0.2, 0.248, 0.284, 0.316, 0.346, 0.374, 0.402, 0.428, 0.454, 0.479, 0.503, 0.527, 0.551, 0.574, 0.597, 0.62, 0.642, 0.664, 0.686, 0.707, 0.728, 0.749, 0.77, 0.791, 0.811, 0.831, 0.852, 0.872, 0.891, 0.911, 0.931, 0.95, 0.969, 0.988, 1.008, 1.026, 1.045, 1.064, 1.083, 1.101, 1.12, 1.138, 1.156, 1.174, 1.193, 1.211, 1.228, 1.246, 1.264, 1.282, 1.299, 1.317, 1.334, 1.352, 1.369, 1.387, 1.404, 1.421, 1.438, 1.455, 1.472, 1.489, 1.506, 1.523, 1.539, 1.556, 1.573, 1.589, 1.606, 1.623, 1.147, 1.655, 1.672, 1.688, 1.704, 1.721, 1.737, 1.753, 1.769, 1.785, 1.801, 1.817, 1.833, 1.849, 1.865, 1.881, 1.897, 1.912, 1.928, 1.944, 1.959, 1.975, 1.991, 2.006, 2.022, 2.037, 1.745, 1.758, 2.084, 2.099, 1.797, 1.491, 2.145, 2.16, 1.849, 1.862, 1.875, 2.221, 2.236, 2.251, 1.586, 1.254, 1.951, 2.311, 2.326, 2.341, 0.942, 2.37, 1.67, 2.4];
 function squeeze(objs,q){
   const per=f=>Math.max(36,Math.round(f)),M=1/(1+.35*q);
   for(const o of objs){
@@ -6092,32 +6093,49 @@ function squeeze(objs,q){
   }
 }
 /* ---- Narrador por estágios (de 30 em 30 níveis) ----
-   Estágio 1: diz sempre a verdade. A partir do 2.º, nas partes fáceis diz a
-   verdade e nas partes fatais começa a mentir (cada vez mais). */
-const N_EASY=["Isto é fácil. Salta e segue.","Só um obstáculo simples. Vai.","Aqui não há truques. Prometo.","Parte tranquila. Aproveita."];
-const N_WARN=["Cuidado. Isto é mesmo perigoso.","Espera pelo momento certo.","Isto mata. Não te precipites.","Observa antes de passares.","Este perigo mexe-se. Repara no ritmo."];
-const N_LIE=["Esta parte é segura. Corre!","Nada aqui. Confia em mim.","Podes passar à vontade.","Isto é só decoração.","Não precisas de parar. A sério.","Estás a ver mal. Está tudo bem aqui."];
+   Cada frase fala da armadilha que está mesmo ali (serra, laser, espetos...).
+   Há armadilhas "de enfeite" (decoy) que NÃO fazem mal: o narrador avisa
+   que são inofensivas, para o jogador aprender a confiar nele.
+   Estágio 1: diz sempre a verdade. A partir do 2.º, nas partes fáceis e nos
+   enfeites diz a verdade e nas partes fatais mente cada vez mais. */
+const CAT={spk1:"spike",spk2:"spike",spk3:"spike",spkgap:"spike",hurdle:"spike",climb:"spike",skyline:"spike",pit2:"pit",pit3:"pit",hid:"hid",fall:"fall",
+ sawH:"saw",sawV:"saw",sawAir:"saw",pendS:"saw",pendHi:"saw",spin1:"saw",spinPlat:"saw",bsawBox:"saw",las1:"laser",las2:"laser",lasH:"laser",
+ pop3:"timing",popRow:"timing",pist1:"timing",pist3:"timing",crush1:"timing",crushRow:"timing",rainS:"timing"};
+const N_TRUE={spike:"Espetos à frente. Salta por cima.",pit:"Buraco à frente. Salta.",hid:"Cuidado: há um espeto escondido aqui.",fall:"O tecto vai cair. Anda depressa.",saw:"Serra à frente. Passa quando ela se afastar.",laser:"Laser à frente. Espera que desligue.",timing:"Atenção ao ritmo: isto sai do chão e do tecto.",floor:"O chão aqui é traiçoeiro. Cuidado onde pisas."};
+const N_LIE={spike:"Esses espetos são de enfeite. Passa à vontade.",pit:"Esse buraco tem chão. Podes andar por cima.",hid:"Aqui não há nada. Corre.",fall:"O tecto é firme. Não cai.",saw:"A serra é de brincar. Podes passar.",laser:"Esse laser está desligado. Passa.",timing:"Isto está parado. Podes passar.",floor:"O chão aqui é firme. Confia em mim."};
+const N_DECOY={spike:"Aquele espeto é de enfeite. Podes passar.",saw:"Aquela serra é inofensiva. Passa.",laser:"Aquele laser não faz mal. Passa.",timing:"Isto não faz mal. Podes passar.",floor:"Isto não faz mal. Podes passar."};
 const N_FREE=["Caminho livre daqui para a frente.","Respira. Aqui não há nada.","Podes andar descansado por aqui."];
 Object.assign(NARR.en,{
-"Isto é fácil. Salta e segue.":"This one is easy. Jump and keep going.","Só um obstáculo simples. Vai.":"Just a simple obstacle. Go.","Aqui não há truques. Prometo.":"No tricks here. I promise.","Parte tranquila. Aproveita.":"Quiet part. Enjoy it.",
-"Cuidado. Isto é mesmo perigoso.":"Careful. This one is truly dangerous.","Espera pelo momento certo.":"Wait for the right moment.","Isto mata. Não te precipites.":"This kills. Don't rush.","Observa antes de passares.":"Watch before you cross.","Este perigo mexe-se. Repara no ritmo.":"This danger moves. Notice the rhythm.",
-"Esta parte é segura. Corre!":"This part is safe. Run!","Nada aqui. Confia em mim.":"Nothing here. Trust me.","Podes passar à vontade.":"You can walk right through.","Isto é só decoração.":"That's just decoration.","Não precisas de parar. A sério.":"No need to stop. Really.","Estás a ver mal. Está tudo bem aqui.":"You're seeing things. It's all fine here.",
+"Espetos à frente. Salta por cima.":"Spikes ahead. Jump over them.","Buraco à frente. Salta.":"A hole ahead. Jump.","Cuidado: há um espeto escondido aqui.":"Careful: there's a hidden spike here.","O tecto vai cair. Anda depressa.":"The ceiling is about to fall. Hurry.","Serra à frente. Passa quando ela se afastar.":"Saw ahead. Pass when it moves away.","Laser à frente. Espera que desligue.":"Laser ahead. Wait for it to switch off.","Atenção ao ritmo: isto sai do chão e do tecto.":"Mind the rhythm: this comes out of the floor and ceiling.","O chão aqui é traiçoeiro. Cuidado onde pisas.":"The floor here is treacherous. Watch your step.",
+"Esses espetos são de enfeite. Passa à vontade.":"Those spikes are just decoration. Walk right through.","Esse buraco tem chão. Podes andar por cima.":"That hole has a floor. You can walk over it.","Aqui não há nada. Corre.":"There's nothing here. Run.","O tecto é firme. Não cai.":"The ceiling is solid. It won't fall.","A serra é de brincar. Podes passar.":"The saw is a toy. You can pass.","Esse laser está desligado. Passa.":"That laser is off. Go through.","Isto está parado. Podes passar.":"This is stopped. You can pass.","O chão aqui é firme. Confia em mim.":"The floor here is solid. Trust me.",
+"Aquele espeto é de enfeite. Podes passar.":"That spike is just decoration. You can pass.","Aquela serra é inofensiva. Passa.":"That saw is harmless. Pass.","Aquele laser não faz mal. Passa.":"That laser is harmless. Pass.","Isto não faz mal. Podes passar.":"This is harmless. You can pass.",
 "Caminho livre daqui para a frente.":"Clear path from here on.","Respira. Aqui não há nada.":"Breathe. There's nothing here.","Podes andar descansado por aqui.":"You can walk calmly here."});
 const EASY_MODS=new Set(["spk1","spk2","pit2","pit3"]);
-const LIE_P=[0,.35,.7,.92];
+const DECOY_MODS=new Set(["spk1","spk2","spk3","sawH","sawV","pendS","spin1","las1","las2","pop3","popRow","pist1","pist3","crush1","bsawBox"]);
+const LIE_P=[0,.35,.7,.92],DECOY_P=[.5,.45,.4,.35],DECOY_TRUTH=[1,.85,.7,.6];
 function constructLevel(i){
   const L=newGrid(),d=i/(RECIPES.length-1),toks=RECIPES[i].split(" "),ex={};
-  const stage=Math.min(3,Math.floor(i/30)),rng=mulberry32(i*9973+7),pk=a=>a[Math.floor(rng()*a.length)];
+  const stage=Math.min(3,Math.floor(i/30)),rng=mulberry32(i*9973+7);
+  const mods=toks.filter(t=>t[0]!=="+");
+  const dec=mods.map(tk=>DECOY_MODS.has(tk)&&rng()<DECOY_P[stage]);
+  if(mods.length&&dec.every(Boolean)){const k=dec.lastIndexOf(true);dec[k]=false;}   // pelo menos uma armadilha real
   const nb=[];
-  let c=3;
-  for(const tk of toks){
-    if(tk[0]==="+")continue;
+  let c=3,mi=0;
+  for(const tk of mods){
     const m=MOD[tk];if(!m)throw new Error("módulo desconhecido "+tk);
-    const n0=L.objs.length;
+    const n0=L.objs.length,s0=L.spk.length,cat=CAT[tk]||"floor",isDec=dec[mi++];
     m[1](L,c,d,i);
-    const easy=EASY_MODS.has(tk),lied=!easy&&rng()<LIE_P[stage];
-    for(let k=n0;k<L.objs.length;k++)L.objs[k].lie=lied;
-    nb.push({x:Math.max(60,c*T-72),say:easy?pk(N_EASY):lied?pk(N_LIE):pk(N_WARN)});
+    let say;
+    if(isDec){
+      for(let k=n0;k<L.objs.length;k++)L.objs[k].decoy=true;
+      for(let k=s0;k<L.spk.length;k++){const [r,cc]=L.spk[k];L.g[r][cc]=".";L.o(mk("spike",cc,r,1,1,{on:false,decoy:true}));}
+      say=rng()<DECOY_TRUTH[stage]?(N_DECOY[cat]||N_DECOY.floor):N_TRUE[cat]||N_TRUE.floor;
+    }else{
+      const easy=EASY_MODS.has(tk),lied=!easy&&rng()<LIE_P[stage];
+      for(let k=n0;k<L.objs.length;k++)L.objs[k].lie=lied;
+      say=lied?(N_LIE[cat]||N_LIE.floor):(N_TRUE[cat]||N_TRUE.floor);
+    }
+    nb.push({x:Math.max(60,c*T-72),say});
     c+=m[0];
   }
   if(c>18)throw new Error("nível "+(i+1)+" demasiado largo: "+c);
@@ -6230,8 +6248,8 @@ const DIFF_LEVELS=["easy","medium","hard","extreme"];
 const DIFF={
   easy:{dart:.8,interval:1.35,plat:.85,gate:1.3},
   medium:{dart:1,interval:1,plat:1,gate:1},
-  hard:{dart:1.25,interval:.8,plat:1.2,gate:.8},
-  extreme:{dart:1.55,interval:.6,plat:1.4,gate:.6}
+  hard:{dart:1.12,interval:.9,plat:1.1,gate:.9},
+  extreme:{dart:1.25,interval:.8,plat:1.2,gate:.8}
 };
 function stageOf(l){return Math.max(0,Math.min(3,Math.floor(l/30)));}   // 4 estágios de 30 níveis
 function diffMult(){
@@ -6441,7 +6459,7 @@ function endlessGameOver(){
    Jogadas gravadas (por um robô) de 4 níveis; repetem-se em ciclo, sem som,
    sem falas e sem mexer em recordes/moedas. */
 const DEMO_ACTS=[[-1,0],[-1,1],[0,0],[0,1],[1,0],[1,1]];
-const DEMO=[{lv:11,seq:"44444454554445544445544454545545554455544444"},{lv:34,seq:"5554554512245554455455555444454555455555543554454"},{lv:52,seq:"4544454305255443553053225544545455445445545544455554444"},{lv:94,seq:"45545544555455544444544444055455545454554454442"}];
+const DEMO=[{lv:11,seq:"44444444454455444455554554444545545545544444"},{lv:34,seq:"5544554032544455554544454554445555444454442444444"},{lv:52,seq:"54444451414024224545044553032255544455455545544444444545544452"},{lv:94,seq:"4554554555555444454454444545415555524551555544454"}];
 function startDemo(){
   const d=DEMO[demoI%DEMO.length];demoI++;
   mode="campaign";lv=d.lv;att=1;demoSeq=d.seq;demoF=0;narr.t="";
@@ -6548,7 +6566,7 @@ function step(){
     }
   }
   {const hb={x:p.x+3,y:p.y+3,w:p.w-6,h:p.h-5};
-  for(const o of objs){const h=HZ[o.k];if(!h)continue;
+  for(const o of objs){const h=HZ[o.k];if(!h||o.decoy)continue;
     if(h.zone&&hit(p,h.zone(o)))h.fx(o);
     for(const sh of h.sh(o))if(hitSh(hb,sh)){die(o);return;}}}
   for(const d of darts){d.x+=d.vx;}
