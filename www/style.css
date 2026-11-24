@@ -360,4 +360,6 @@ body.paused::after{content:"";position:fixed;left:0;right:0;bottom:0;height:var(
 
 /* Menu principal: gameplay desfocada por trás (como no jogo de referência) */
 .inmenu #frame{bottom:var(--strip)}
-#menu[data-screen="title"]{background:rgba(9,7,24,.18);-webkit-backdrop-filter:blur(3.5px) brightness(1.25);backdrop-filter:blur(3.5px) brightness(1.25)}
+#menu[data-screen="title"]{background:rgba(9,7,24,.10);-webkit-backdrop-filter:blur(1.2px) brightness(1.08);backdrop-filter:blur(1.2px) brightness(1.08)}
+
+.skincard.skinlocked{opacity:.5;filter:grayscale(.55)}
