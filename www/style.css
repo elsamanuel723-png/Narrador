@@ -363,3 +363,8 @@ body.paused::after{content:"";position:fixed;left:0;right:0;bottom:0;height:var(
 #menu[data-screen="title"]{background:rgba(9,7,24,.10);-webkit-backdrop-filter:blur(1.2px) brightness(1.08);backdrop-filter:blur(1.2px) brightness(1.08)}
 
 .skincard.skinlocked{opacity:.5;filter:grayscale(.55)}
+
+/* Menu de pausa compacto: tem de caber sempre acima da faixa dos controlos (ecrãs baixos em horizontal) */
+#menu[data-screen="pause"]{overflow-y:auto}
+#menu[data-screen="pause"] #btns{max-width:300px;gap:clamp(4px,1.8vh,10px)}
+#menu[data-screen="pause"] .card{padding:clamp(8px,2.5vh,13px) 12px;font-size:clamp(14px,3.4vh,18px);line-height:1.15}
